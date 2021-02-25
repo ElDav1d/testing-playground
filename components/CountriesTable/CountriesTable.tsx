@@ -70,6 +70,28 @@ const CountriesTable = ({ countries }: Props) => {
     setValue(value);
   };
 
+  const countriesList = (
+    <ul className={styles.list}>
+      {orderedCountries.map(
+        ({ alpha3Code, name, flag, population, area, gini }) => (
+          <li key={name}>
+            <Link href={`/country/${alpha3Code}`}>
+              <a className={styles.row}>
+                <div className={styles.flag}>
+                  <img src={flag} alt={name} />
+                </div>
+                <div className={styles.name}>{name}</div>
+                <div className={styles.population}>{population}</div>
+                <div className={styles.area}>{area || 0}</div>
+                <div className={styles.gini}>{gini || 0}</div>
+              </a>
+            </Link>
+          </li>
+        )
+      )}
+    </ul>
+  );
+
   return (
     <div>
       <div className={styles.heading}>
@@ -108,25 +130,7 @@ const CountriesTable = ({ countries }: Props) => {
           {value === "gini" && <SortArrow direction={direction} />}
         </button>
       </div>
-      <ul className={styles.list}>
-        {orderedCountries.map(
-          ({ alpha3Code, name, flag, population, area, gini }) => (
-            <li key={name}>
-              <Link href={`/country/${alpha3Code}`}>
-                <a className={styles.row}>
-                  <div className={styles.flag}>
-                    <img src={flag} alt={name} />
-                  </div>
-                  <div className={styles.name}>{name}</div>
-                  <div className={styles.population}>{population}</div>
-                  <div className={styles.area}>{area || 0}</div>
-                  <div className={styles.gini}>{gini || 0}</div>
-                </a>
-              </Link>
-            </li>
-          )
-        )}
-      </ul>
+      {orderedCountries.length ? countriesList : null}
     </div>
   );
 };
